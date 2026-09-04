@@ -1,0 +1,2771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohsin | AI Engineer</title>
+  <meta name="description" content="Mohsin is an AI Engineer focused on building intelligent applications, machine-learning solutions, AI automation, and modern AI-powered products.">
+  <meta name="keywords" content="AI Engineer, Machine Learning, Deep Learning, Python, Generative AI, Computer Vision, Natural Language Processing, Automation">
+  <meta name="author" content="Mohsin">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mohsin | AI Engineer">
+  <meta property="og:description" content="Building Intelligent Solutions With AI. Machine learning, generative models, and AI automation.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & BASE STYLES
+       ========================================================================== */
+    :root {
+      --bg-black: #030712;
+      --bg-dark-navy: #0b0f19;
+      --bg-card: rgba(17, 24, 39, 0.6);
+      --bg-card-hover: rgba(31, 41, 55, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(6, 182, 212, 0.3);
+      
+      --primary-white: #f9fafb;
+      --text-muted: #9ca3af;
+      --electric-blue: #2563eb;
+      --cyan: #06b6d4;
+      --soft-purple: #8b5cf6;
+      --neon-cyan: #22d3ee;
+      
+      --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #2563eb 50%, #8b5cf6 100%);
+      --gradient-text: linear-gradient(135deg, #ffffff 30%, #22d3ee 70%, #8b5cf6 100%);
+      --gradient-glow: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.15));
+
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--primary-white);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas#particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--primary-white);
+    }
+
+    .gradient-text {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: var(--text-muted);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Utility Layout */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 6rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Badges & Pills */
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      color: var(--cyan);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .section-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem auto;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Glassmorphism UI Components */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.15);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      border: none;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--primary-white);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all var(--transition-normal);
+      padding: 1.25rem 0;
+    }
+
+    .navbar.scrolled {
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-logo .name {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .brand-logo .role {
+      font-size: 0.65rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary-white);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-white);
+      transition: all var(--transition-fast);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 7rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-visual-card {
+      width: 100%;
+      height: 420px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.1);
+    }
+
+    .hero-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3, 7, 18, 0.1) 0%, rgba(3, 7, 18, 0.8) 100%);
+    }
+
+    .badge-bar {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(11, 15, 25, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: var(--primary-white);
+    }
+
+    /* ==========================================================================
+       ABOUT SECTION
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image-wrapper {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .about-image-wrapper img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-content h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-content p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .about-tag {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--cyan);
+    }
+
+    /* ==========================================================================
+       SKILLS SECTION
+       ========================================================================== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      padding: 1.8rem;
+    }
+
+    .skill-card-title {
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--cyan);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: var(--primary-white);
+    }
+
+    .skill-item::before {
+      content: '▹';
+      color: var(--soft-purple);
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       SERVICES SECTION
+       ========================================================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .service-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .service-body h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+
+    }
+
+    .service-body p {
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       PROJECTS SECTION
+       ========================================================================== */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-img-wrapper {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .project-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .project-card:hover .project-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .project-label-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-color);
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-content p {
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-tech span {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       MODAL
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      max-width: 750px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-body h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-section {
+      margin-bottom: 1.2rem;
+    }
+
+    .modal-section h4 {
+      font-size: 1rem;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       AI LAB & ANIMATION PIPELINE
+       ========================================================================== */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .lab-card {
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .lab-card.active {
+      border-color: var(--cyan);
+      background: var(--gradient-glow);
+    }
+
+    .lab-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pipeline-visualizer {
+      margin-top: 2.5rem;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pipeline-step {
+      flex: 1;
+      min-width: 140px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+    }
+
+    .pipeline-step .step-title {
+      font-size: 0.8rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .pipeline-step .step-desc {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .pipeline-arrow {
+      color: var(--soft-purple);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       AI DEMO / ASSISTANT PREVIEW
+       ========================================================================== */
+    .chat-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 480px;
+    }
+
+    .chat-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chat-header-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .chat-messages {
+      flex-grow: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-msg {
+      max-width: 80%;
+      padding: 0.85rem 1.2rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background: var(--electric-blue);
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-msg.ai {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      border-bottom-left-radius: 2px;
+    }
+
+    .chat-input-area {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .chat-input-area input {
+      flex-grow: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .chat-input-area input:focus {
+      border-color: var(--cyan);
+    }
+
+    /* ==========================================================================
+       AI WORKFLOW TIMELINE
+       ========================================================================== */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .workflow-card {
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .workflow-num {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--cyan);
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card p {
+      font-size: 0.88rem;
+    }
+
+    /* ==========================================================================
+       TECH STACK BADGES
+       ========================================================================== */
+    .tech-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .tech-badge {
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--primary-white);
+      transition: all var(--transition-normal);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tech-badge:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
+    }
+
+    /* ==========================================================================
+       AI ARCHITECTURE DIAGRAM
+       ========================================================================== */
+    .arch-container {
+      padding: 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .arch-node {
+      width: 100%;
+      max-width: 320px;
+      padding: 0.85rem 1.2rem;
+      background: rgba(11, 15, 25, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all var(--transition-fast);
+    }
+
+    .arch-node:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .arch-arrow-down {
+      color: var(--cyan);
+      font-size: 1.2rem;
+    }
+
+    /* ==========================================================================
+       WHY WORK WITH MOHSIN / USE CASES
+       ========================================================================== */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-white);
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+    }
+
+    .usecase-card {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .usecase-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .usecase-body {
+      padding: 1.2rem;
+    }
+
+    .usecase-body h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ==========================================================================
+       INQUIRY FORM & CONTACT
+       ========================================================================== */
+    .inquiry-form {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-control:focus {
+      border-color: var(--cyan);
+    }
+
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-error {
+      color: #ef4444;
+      font-size: 0.8rem;
+      display: none;
+    }
+
+    .form-output {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid var(--cyan);
+      border-radius: 8px;
+      display: none;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION
+       ========================================================================== */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .faq-toggle {
+      font-size: 1.2rem;
+      color: var(--cyan);
+      transition: transform var(--transition-fast);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-normal), margin-top var(--transition-normal);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      margin-top: 0.8rem;
+    }
+
+    /* ==========================================================================
+       GALLERY & LIGHTBOX
+       ========================================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .gallery-item {
+      height: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-normal);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.95);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 85vw;
+      max-height: 85vh;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .lightbox-btn {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-prev { left: -60px; top: 50%; transform: translateY(-50%); }
+    .lightbox-next { right: -60px; top: 50%; transform: translateY(-50%); }
+    .lightbox-close { top: -50px; right: 0; }
+
+    /* ==========================================================================
+       CTA & FOOTER & BACK TO TOP
+       ========================================================================== */
+    .cta-card {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+      border: 1px solid var(--border-color);
+    }
+
+    .cta-card h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-card p {
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 0 2rem 0;
+      background: var(--bg-dark-navy);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--cyan);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: all var(--transition-fast);
+      z-index: 900;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid, .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--bg-dark-navy);
+        border-left: 1px solid var(--border-color);
+        flex-direction: column;
+        justify-content: center;
+        transition: right var(--transition-normal);
+        z-index: 1000;
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .nav-actions {
+        display: none;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="brand-logo">
+        <span class="name">MOHSIN</span>
+        <span class="role">AI ENGINEER</span>
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#ailab" class="nav-link">AI Lab</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#inquiry" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Hire Me</a>
+        <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Contact</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-content reveal">
+        <div class="section-badge">AI ENGINEER</div>
+        <h1>Building Intelligent Solutions <span class="gradient-text">With AI</span></h1>
+        <p>I’m Mohsin, an AI Engineer focused on building intelligent applications, machine learning solutions and AI-powered products.</p>
+        
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#inquiry" class="btn btn-secondary">Hire Me</a>
+        </div>
+
+        <div class="badge-bar">
+          <span>Artificial Intelligence</span>
+          <span>•</span>
+          <span>Machine Learning</span>
+          <span>•</span>
+          <span>Automation</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-visual-card">
+          <img src="https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QnVpbGRpbmclMjBJbnRlbGxpZ2VudCUyMFNvbHV0aW9ucyUyMFdpdGglMjBBSXxlbnwwfHwwfHx8MA%3D%3D" alt="Building Intelligent Solutions With AI" loading="eager">
+          <div class="hero-visual-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrapper reveal">
+          <img src="https://images.unsplash.com/photo-1753513291124-4f615bf1f6de?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fEVuZ2luZWVyaW5nJTIwdGhlJTIwTmV4dCUyMEVyYSUyMG9mJTIwSW50ZWxsaWdlbnQlMjBTb2Z0d2FyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Engineering the Next Era of Intelligent Software" loading="lazy">
+        </div>
+        <div class="about-content reveal">
+          <div class="section-badge">ABOUT MOHSIN</div>
+          <h3>Engineering the Next Era of Intelligent Software</h3>
+          <p>As an AI Engineer, I specialize in designing and deploying systems that translate data into meaningful automation and intelligence. My work centers on building reliable machine learning models, integrating generative capabilities into practical workflows, and optimizing algorithms for real-world impact.</p>
+          <p>I focus on bridge-building: bringing abstract deep learning architecture into production-ready software environments with structured code, robust data processing, and seamless user interaction.</p>
+
+          <div class="about-tags">
+            <span class="about-tag">Artificial Intelligence</span>
+            <span class="about-tag">Machine Learning</span>
+            <span class="about-tag">Deep Learning</span>
+            <span class="about-tag">Python</span>
+            <span class="about-tag">Data Processing</span>
+            <span class="about-tag">AI Automation</span>
+            <span class="about-tag">Computer Vision</span>
+            <span class="about-tag">NLP</span>
+            <span class="about-tag">Generative AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">CAPABILITIES</div>
+        <h2>AI & Technical Skills</h2>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="glass-card skill-card">
+          <div class="skill-card-title">AI / ML</div>
+          <ul class="skill-list">
+            <li class="skill-item">Machine Learning</li>
+            <li class="skill-item">Deep Learning</li>
+            <li class="skill-item">Generative AI</li>
+            <li class="skill-item">Neural Networks</li>
+            <li class="skill-item">Model Development</li>
+          </ul>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-card-title">Programming</div>
+          <ul class="skill-list">
+            <li class="skill-item">Python</li>
+            <li class="skill-item">JavaScript</li>
+            <li class="skill-item">SQL</li>
+          </ul>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-card-title">AI Applications</div>
+          <ul class="skill-list">
+            <li class="skill-item">Computer Vision</li>
+            <li class="skill-item">NLP</li>
+            <li class="skill-item">AI Automation</li>
+            <li class="skill-item">Recommendation Systems</li>
+            <li class="skill-item">Intelligent Search</li>
+          </ul>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-card-title">Engineering</div>
+          <ul class="skill-list">
+            <li class="skill-item">APIs</li>
+            <li class="skill-item">Data Processing</li>
+            <li class="skill-item">Model Integration</li>
+            <li class="skill-item">Backend Integration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">WHAT I OFFER</div>
+        <h2>AI Engineering Services</h2>
+      </div>
+
+      <div class="services-grid reveal">
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" alt="AI Application Development" loading="lazy">
+          <div class="service-body">
+            <h3>1. AI Application Development</h3>
+            <p>Build intelligent applications tailored around practical business requirements and operational workflows.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="Machine Learning Solutions" loading="lazy">
+          <div class="service-body">
+            <h3>2. Machine Learning Solutions</h3>
+            <p>Develop machine-learning based solutions for predictive modeling and classification use cases.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="Generative AI Solutions" loading="lazy">
+          <div class="service-body">
+            <h3>3. Generative AI Solutions</h3>
+            <p>Create modern applications utilizing modern generative AI concepts and model capabilities.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="AI Automation" loading="lazy">
+          <div class="service-body">
+            <h3>4. AI Automation</h3>
+            <p>Automate repetitive technical and business workflows with intelligent software systems.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="NLP Solutions" loading="lazy">
+          <div class="service-body">
+            <h3>5. NLP Solutions</h3>
+            <p>Build applications focused on text processing, information extraction, and language understanding.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8RGV2ZWxvcCUyMHNvbHV0aW9ucyUyMGZvciUyMGF1dG9tYXRlZCUyMGltYWdlJTIwYW5hbHlzaXMlMjBhbmQlMjB2aXN1YWwtZGF0YSUyMHJlY29nbml0aW9uJTIwcHJvY2Vzc2luZy58ZW58MHx8MHx8fDA%3D" alt="Computer Vision" loading="lazy">
+          <div class="service-body">
+            <h3>6. Computer Vision</h3>
+            <p>Develop solutions for automated image analysis and visual-data recognition processing.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1746608943132-065d1d4b3c5d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fDcuJTIwQUklMjBDaGF0Ym90c3xlbnwwfHwwfHx8MA%3D%3D" alt="AI Chatbots" loading="lazy">
+          <div class="service-body">
+            <h3>7. AI Chatbots</h3>
+            <p>Create intelligent conversational interfaces to streamline support and information retrieval.</p>
+          </div>
+        </div>
+
+        <div class="glass-card service-card">
+          <img class="service-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="AI API Integration" loading="lazy">
+          <div class="service-body">
+            <h3>8. AI API Integration</h3>
+            <p>Connect advanced AI capabilities seamlessly with existing web services and corporate platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">PORTFOLIO</div>
+        <h2>Featured AI Projects</h2>
+      </div>
+
+      <div class="filter-container reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ml">Machine Learning</button>
+        <button class="filter-btn" data-filter="genai">Generative AI</button>
+        <button class="filter-btn" data-filter="nlp">NLP</button>
+        <button class="filter-btn" data-filter="cv">Computer Vision</button>
+        <button class="filter-btn" data-filter="automation">Automation</button>
+      </div>
+
+      <div class="projects-grid reveal" id="projects-grid">
+        <div class="glass-card project-card" data-category="nlp genai">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://media.istockphoto.com/id/1474963602/photo/digital-chatbot-a-i-robot-application-conversation-assistant-ai-artificial-intelligence.webp?a=1&b=1&s=612x612&w=0&k=20&c=vE-NxLyhRhZIrMJiAE9HvJUOKLr4PY44fRdz6oskVVI=" alt="AI Customer Support Assistant" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>AI Customer Support Assistant</h3>
+            <p>An AI-powered conversational assistant concept for handling common customer queries and routing tasks.</p>
+            <div class="project-tech">
+              <span>Python</span><span>NLP</span><span>Generative AI</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="0">View Details</button>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="nlp automation">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=600&q=80" alt="Resume Analyzer" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>Resume Analyzer</h3>
+            <p>AI application concept for analyzing candidate resumes and extracting structured info for matching.</p>
+            <div class="project-tech">
+              <span>Python</span><span>NLP</span><span>Data Extraction</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="1">View Details</button>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="ml">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Intelligent Recommendation System" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>Intelligent Recommendation System</h3>
+            <p>Machine-learning based recommendation application concept providing personalized suggestions.</p>
+            <div class="project-tech">
+              <span>Machine Learning</span><span>Python</span><span>Filtering</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="2">View Details</button>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="nlp automation">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://media.istockphoto.com/id/2221493679/photo/ai-technology-automates-document-verification-for-accuracy-and-compliance.webp?a=1&b=1&s=612x612&w=0&k=20&c=Oyyci3_3bM0dFzeXl-rXU1DsuWXivdW3VzuDUzakHvI=" alt="Document Intelligence" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>Document Intelligence</h3>
+            <p>AI system concept for parsing complex PDF files and extracting data into structured JSON formats.</p>
+            <div class="project-tech">
+              <span>OCR</span><span>NLP</span><span>Automation</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="3">View Details</button>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="cv">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=600&q=80" alt="Computer Vision Application" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>Computer Vision Application</h3>
+            <p>Visual analysis application concept for real-time object detection and categorization from image feeds.</p>
+            <div class="project-tech">
+              <span>Computer Vision</span><span>Deep Learning</span><span>Python</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="4">View Details</button>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="genai">
+          <div class="project-img-wrapper">
+            <span class="project-label-badge">Portfolio Project</span>
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="AI Content Assistant" loading="lazy">
+          </div>
+          <div class="project-content">
+            <h3>AI Content Assistant</h3>
+            <p>Generative AI application concept for streamlining editorial and technical writing workflows.</p>
+            <div class="project-tech">
+              <span>Generative AI</span><span>JavaScript</span><span>APIs</span>
+            </div>
+            <button class="btn btn-secondary open-modal-btn" data-project="5">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-overlay" id="project-modal">
+    <div class="glass-card modal-card">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <img id="modal-img" class="modal-img" src="" alt="Project Visual">
+      <div class="modal-body">
+        <h3 id="modal-title">Project Title</h3>
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p id="modal-overview"></p>
+        </div>
+        <div class="modal-section">
+          <h4>Key Features</h4>
+          <p id="modal-features"></p>
+        </div>
+        <div class="modal-section">
+          <h4>AI Concept Used</h4>
+          <p id="modal-concept"></p>
+        </div>
+        <div class="modal-section">
+          <h4>Technology Stack</h4>
+          <p id="modal-tech"></p>
+        </div>
+        <div class="modal-actions">
+          <a href="#inquiry" class="btn btn-primary modal-action-close">Discuss Similar Project</a>
+          <a href="#contact" class="btn btn-secondary modal-action-close">Contact Mohsin</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="ailab">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">EXPERIMENTAL</div>
+        <h2>AI Lab</h2>
+      </div>
+
+      <div class="lab-grid reveal">
+        <div class="glass-card lab-card active" data-concept="nn">
+          <h4>Neural Networks</h4>
+          <p>Layered nodes processing feature interactions.</p>
+        </div>
+        <div class="glass-card lab-card" data-concept="ml">
+          <h4>Machine Learning</h4>
+          <p>Pattern recognition on structured features.</p>
+        </div>
+        <div class="glass-card lab-card" data-concept="genai">
+          <h4>Generative AI</h4>
+          <p>Context-aware output generation.</p>
+        </div>
+        <div class="glass-card lab-card" data-concept="cv">
+          <h4>Computer Vision</h4>
+          <p>Feature map extraction from spatial tensors.</p>
+        </div>
+        <div class="glass-card lab-card" data-concept="nlp">
+          <h4>Natural Language Processing</h4>
+          <p>Token embeddings & semantic alignment.</p>
+        </div>
+      </div>
+
+      <div class="glass-card pipeline-visualizer reveal">
+        <div class="pipeline-step">
+          <div class="step-title">Input</div>
+          <div class="step-desc" id="lab-input-text">Raw Data / Embeddings</div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-title">AI Model</div>
+          <div class="step-desc" id="lab-model-text">Neural Network Architecture</div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-title">Processing</div>
+          <div class="step-desc" id="lab-process-text">Vector Computation</div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-title">Output</div>
+          <div class="step-desc" id="lab-output-text">Intelligent Inference</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">INTERACTIVE</div>
+        <h2>AI Assistant Preview</h2>
+      </div>
+
+      <div class="glass-card chat-container reveal">
+        <div class="chat-header">
+          <div class="chat-header-dot"></div>
+          <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">Interactive Interface Concept</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg user">Explain machine learning in simple words.</div>
+          <div class="chat-msg ai">Machine learning allows software to learn patterns from data and use those patterns to make predictions or decisions.</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" placeholder="Ask a question..." aria-label="Ask a question">
+          <button class="btn btn-primary" id="chat-send-btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">METHODOLOGY</div>
+        <h2>AI Workflow</h2>
+      </div>
+
+      <div class="workflow-grid reveal">
+        <div class="glass-card workflow-card">
+          <div class="workflow-num">01</div>
+          <h3>Understand</h3>
+          <p>Analyze the operational problem and inspect data availability.</p>
+        </div>
+        <div class="glass-card workflow-card">
+          <div class="workflow-num">02</div>
+          <h3>Prepare</h3>
+          <p>Clean, structure, and preprocess relevant data pipelines.</p>
+        </div>
+        <div class="glass-card workflow-card">
+          <div class="workflow-num">03</div>
+          <h3>Build</h3>
+          <p>Develop, tune, and test the AI or machine learning model.</p>
+        </div>
+        <div class="glass-card workflow-card">
+          <div class="workflow-num">04</div>
+          <h3>Evaluate</h3>
+          <p>Review output metrics, accuracy, and edge-case behavior.</p>
+        </div>
+        <div class="glass-card workflow-card">
+          <div class="workflow-num">05</div>
+          <h3>Integrate</h3>
+          <p>Deploy model endpoints into practical user application layers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">STACK</div>
+        <h2>Technology Ecosystem</h2>
+      </div>
+
+      <div class="tech-flex reveal">
+        <div class="tech-badge">Python</div>
+        <div class="tech-badge">Machine Learning</div>
+        <div class="tech-badge">Deep Learning</div>
+        <div class="tech-badge">Generative AI</div>
+        <div class="tech-badge">NLP</div>
+        <div class="tech-badge">Computer Vision</div>
+        <div class="tech-badge">SQL</div>
+        <div class="tech-badge">JavaScript</div>
+        <div class="tech-badge">APIs</div>
+        <div class="tech-badge">Data Processing</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">STRUCTURE</div>
+        <h2>AI Architecture</h2>
+      </div>
+
+      <div class="glass-card arch-container reveal">
+        <div class="arch-flow">
+          <div class="arch-node">User Interface</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node">Application Layer</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node">API Gateway</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node">AI Processing Pipeline</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node">ML / AI Model Inference</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node">Data Storage & Vector Store</div>
+          <div class="arch-arrow-down">↓</div>
+          <div class="arch-node" style="border-color: var(--cyan); color: var(--cyan);">Intelligent Output</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">ADVANTAGE</div>
+        <h2>Why Work With Mohsin</h2>
+      </div>
+
+      <div class="grid-4 reveal">
+        <div class="glass-card feature-card">
+          <h3>Problem-Solving Approach</h3>
+          <p>Focused on solving core domain challenges rather than deploying unnecessary complexity.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Intelligent Solutions</h3>
+          <p>Targeted application of algorithms that bring concrete functional automation.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Clean Development</h3>
+          <p>Readable, maintainable code structured according to industry standards.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Practical AI Applications</h3>
+          <p>Emphasis on user usability and seamless backend integration.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Scalable Architecture</h3>
+          <p>Designed to expand safely as data volume and usage requirements scale.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Data-Driven Thinking</h3>
+          <p>Grounded in systematic evaluation metrics and rigorous validation.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Modern Technologies</h3>
+          <p>Utilizing relevant, current tools and AI methodologies.</p>
+        </div>
+        <div class="glass-card feature-card">
+          <h3>Professional Communication</h3>
+          <p>Clear project updates, requirements tracking, and structured delivery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">APPLICATIONS</div>
+        <h2>Where AI Can Make An Impact</h2>
+      </div>
+
+      <div class="grid-4 reveal">
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://media.istockphoto.com/id/1474963602/photo/digital-chatbot-a-i-robot-application-conversation-assistant-ai-artificial-intelligence.webp?a=1&b=1&s=612x612&w=0&k=20&c=vE-NxLyhRhZIrMJiAE9HvJUOKLr4PY44fRdz6oskVVI=" alt="Customer Support" loading="lazy">
+          <div class="usecase-body">
+            <h3>Customer Support</h3>
+            <p>Automated responses for standard user inquiries.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=500&q=80" alt="Document Processing" loading="lazy">
+          <div class="usecase-body">
+            <h3>Document Processing</h3>
+            <p>Automated data extraction from complex paperwork.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80" alt="Business Automation" loading="lazy">
+          <div class="usecase-body">
+            <h3>Business Automation</h3>
+            <p>Streamlining internal manual tasks and triage.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80" alt="Recommendation Systems" loading="lazy">
+          <div class="usecase-body">
+            <h3>Recommendation Systems</h3>
+            <p>Targeted product or content suggestions.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=500&q=80" alt="Search" loading="lazy">
+          <div class="usecase-body">
+            <h3>Search</h3>
+            <p>Semantic retrieval based on contextual meaning.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=500&q=80" alt="Data Analysis" loading="lazy">
+          <div class="usecase-body">
+            <h3>Data Analysis</h3>
+            <p>Extracting trend signals from large data tables.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=500&q=80" alt="Content Workflows" loading="lazy">
+          <div class="usecase-body">
+            <h3>Content Workflows</h3>
+            <p>Assisting drafting and summarization tasks.</p>
+          </div>
+        </div>
+
+        <div class="glass-card usecase-card">
+          <img class="usecase-img" src="https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=500&q=80" alt="Computer Vision" loading="lazy">
+          <div class="usecase-body">
+            <h3>Computer Vision</h3>
+            <p>Visual inspection and image categorization.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inquiry">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">GET STARTED</div>
+        <h2>Have An AI Project In Mind?</h2>
+      </div>
+
+      <div class="glass-card inquiry-form reveal">
+        <form id="inquiryForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+              <span class="form-error" id="nameError">Please enter your name.</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" class="form-control" placeholder="0320 0244288" required>
+              <span class="form-error" id="phoneError">Please enter your phone number.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="Your Email Address" required>
+              <span class="form-error" id="emailError">Please enter a valid email.</span>
+            </div>
+            <div class="form-group">
+              <label for="projectType">Project Type</label>
+              <select id="projectType" class="form-control" required>
+                <option value="">Select Project Type</option>
+                <option value="AI Application">AI Application</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Generative AI">Generative AI</option>
+                <option value="Chatbot">Chatbot</option>
+                <option value="Computer Vision">Computer Vision</option>
+                <option value="NLP">NLP</option>
+                <option value="Automation">Automation</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="form-error" id="typeError">Please select a project type.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="budget">Budget Tier</label>
+            <select id="budget" class="form-control" required>
+              <option value="">Select Budget Preference</option>
+              <option value="Discuss">To Discuss</option>
+              <option value="Small Project">Small Scale Scope</option>
+              <option value="Medium Project">Medium Scale Scope</option>
+              <option value="Large Project">Large Scale Scope</option>
+            </select>
+            <span class="form-error" id="budgetError">Please select a budget preference.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Project Details</label>
+            <textarea id="details" class="form-control" placeholder="Describe your goal or requirements..." required></textarea>
+            <span class="form-error" id="detailsError">Please provide project details.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Send Project Request</button>
+
+          <div class="form-output" id="formOutput"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">CONNECT</div>
+        <h2>Let’s Build Something Intelligent</h2>
+        <p style="margin-top: 1rem;">Have an AI idea or need help integrating intelligent features into your application? Get in touch to discuss your requirements.</p>
+      </div>
+
+      <div class="contact-actions reveal">
+        <a href="mailto:mohsinhassan24@gmail.com" class="btn btn-primary" id="contact-email-btn">mohsinhassan24@gmail.com</a>
+        <a href="tel:+923200244288" class="btn btn-secondary" id="contact-call-btn">0320 0244288</a>
+        <a href="https://wa.me/923200244288" class="btn btn-secondary" id="contact-wa-btn" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">QUESTIONS</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-container reveal">
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>1. What type of AI solutions can you build?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            I build bespoke applications tailored to specific business requirements, including machine learning models, generative workflow integrations, conversational UI, and specialized data extraction pipelines.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>2. Can you develop machine-learning applications?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, I design and implement predictive algorithms, classification models, and data transformation routines for integration into web environments.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>3. Can you build AI chatbots?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, I design conversational interfaces powered by language models tailored to pull answers from knowledge bases or standard service documentation.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>4. Can you work with Python?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Python is my primary development language for data processing, AI model building, and backend logic development.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>5. Can AI be integrated into an existing website?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, existing platforms can connect with lightweight API layers that process incoming user requests through intelligent models without re-architecting the entire platform.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>6. Do you work with Generative AI?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, I integrate generative foundation models into practical software tools for content creation, search, and text structuring.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>7. Can you build computer-vision solutions?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes, I create tools that analyze images or visual streams for object detection, visual classification, or document digitization.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>8. How can I discuss an AI project?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            You can fill out the inquiry form above with your desired project parameters or reach out directly using the provided email link.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">VISUAL SHOWCASE</div>
+        <h2>AI Focused Gallery</h2>
+      </div>
+
+      <div class="gallery-grid reveal" id="gallery-grid">
+        <div class="gallery-item glass-card" data-index="0">
+          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="AI Engineer Workspace" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="1">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Machine Learning Visualization" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="2">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Neural Network Visualization" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="3">
+          <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=600&q=80" alt="Python Development Interface" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="4">
+          <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=600&q=80" alt="Data Analysis Dashboard" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="5">
+          <img src="https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=600&q=80" alt="Computer Vision Processing" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="6">
+          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80" alt="AI Server Data Center" loading="lazy">
+        </div>
+        <div class="gallery-item glass-card" data-index="7">
+          <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="Generative AI Abstract Visual" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-btn lightbox-close" id="lb-close">&times;</button>
+      <button class="lightbox-btn lightbox-prev" id="lb-prev">&#10094;</button>
+      <img id="lb-img" class="lightbox-img" src="" alt="Enlarged Gallery Visual">
+      <button class="lightbox-btn lightbox-next" id="lb-next">&#10095;</button>
+    </div>
+  </div>
+
+  <section style="padding-bottom: 8rem;">
+    <div class="container">
+      <div class="glass-card cta-card reveal">
+        <h2>Turn Your Idea Into An Intelligent Solution</h2>
+        <p>Let’s explore how AI can improve your product, workflow or application.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#inquiry" class="btn btn-primary">Start A Project</a>
+          <a href="#contact" class="btn btn-secondary">Contact Mohsin</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="brand-logo" style="margin-bottom: 1rem;">
+            <span class="name">MOHSIN</span>
+            <span class="role">AI ENGINEER</span>
+          </a>
+          <p style="max-width: 400px; margin-top: 0.5rem;">Building Intelligent Solutions With AI</p>
+          <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1rem;">
+            <a href="mailto:mohsinhassan24@gmail.com" class="nav-link">mohsinhassan24@gmail.com</a>
+            <a href="tel:+923200244288" class="nav-link">0320 0244288</a>
+            <a href="https://wa.me/923200244288" class="nav-link" target="_blank" rel="noopener">WhatsApp: 0320 0244288</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--cyan);">Contact Us</h4>
+          <div class="footer-links">
+            <a href="#contact" class="nav-link">Get in touch</a>
+            <a href="mailto:mohsinhassan24@gmail.com" class="nav-link">Email</a>
+            <a href="https://wa.me/923200244288" class="nav-link" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <h4 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--cyan);">Quick Links</h4>
+          <div class="footer-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#ailab" class="nav-link">AI Lab</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; <span id="current-year"></span> Mohsin. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to Top">↑</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* ==========================================================================
+         BACKGROUND PARTICLE / NEURAL ANIMATION
+         ========================================================================== */
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.vx = (Math.random() - 0.5) * 0.6;
+          this.vy = (Math.random() - 0.5) * 0.6;
+          this.radius = Math.random() * 1.8 + 1;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(6, 182, 212, 0.4)';
+          ctx.fill();
+        }
+      }
+
+      function initParticles() {
+        particles = [];
+        const count = Math.min(Math.floor(window.innerWidth / 20), 60);
+        for (let i = 0; i < count; i++) {
+          particles.push(new Particle());
+        }
+      }
+      initParticles();
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 - dist / 1200})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+
+      /* ==========================================================================
+         NAVBAR, SCROLL EFFECT & MOBILE MENU
+         ========================================================================== */
+      const navbar = document.getElementById('navbar');
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('nav-menu');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const backToTopBtn = document.getElementById('backToTop');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+          backToTopBtn.classList.add('visible');
+        } else {
+          navbar.classList.remove('scrolled');
+          backToTopBtn.classList.remove('visible');
+        }
+
+        // Active Section Highlight
+        let current = '';
+        const sections = document.querySelectorAll('section, footer');
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+        });
+      });
+
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+
+      /* ==========================================================================
+         SCROLL REVEAL ANIMATIONS
+         ========================================================================== */
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        revealElements.forEach(el => {
+          const elementTop = el.getBoundingClientRect().top;
+          if (elementTop < windowHeight - 80) {
+            el.classList.add('active');
+          }
+        });
+      };
+      window.addEventListener('scroll', revealOnScroll);
+      revealOnScroll();
+
+
+      /* ==========================================================================
+         PROJECT FILTERING
+         ========================================================================== */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          projectCards.forEach(card => {
+            if (filter === 'all') {
+              card.style.display = 'flex';
+            } else {
+              const categories = card.getAttribute('data-category').split(' ');
+              if (categories.includes(filter)) {
+                card.style.display = 'flex';
+              } else {
+                card.style.display = 'none';
+              }
+            }
+          });
+        });
+      });
+
+
+      /* ==========================================================================
+         PROJECT MODAL DATA & FUNCTIONALITY
+         ========================================================================== */
+      const projectData = [
+        {
+          title: "AI Customer Support Assistant",
+          img: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=800&q=80",
+          overview: "An AI-powered conversational assistant concept engineered to process standard customer requests and perform contextual problem routing.",
+          features: "Automated ticket triage, multi-turn dialogue management, intent recognition, fast response synthesis.",
+          concept: "Natural Language Processing (NLP) & Contextual Prompt Pipeline",
+          tech: "Python, Large Language Models, Vector Database, JavaScript"
+        },
+        {
+          title: "Resume Analyzer",
+          img: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
+          overview: "AI application concept engineered for parsing unstructured candidate resumes into clean, standardized metric profiles.",
+          features: "Structured key-value extraction, skill verification alignment, automated summary scoring.",
+          concept: "Information Extraction & Named Entity Recognition (NER)",
+          tech: "Python, NLP Parsing Libraries, RegEx Pipelines"
+        },
+        {
+          title: "Intelligent Recommendation System",
+          img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+          overview: "A machine-learning based recommendation application concept providing personalized product suggestions from behavior trends.",
+          features: "Collaborative filtering analysis, real-time matrix update, user interest vector tracking.",
+          concept: "Supervised & Unsupervised Machine Learning",
+          tech: "Python, Scikit-Learn, Pandas, Data Indexing"
+        },
+        {
+          title: "Document Intelligence",
+          img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+          overview: "An enterprise document processing concept designed to parse complex PDF invoices and forms automatically into digital systems.",
+          features: "Layout-aware text OCR extraction, error verification, structured JSON export formatting.",
+          concept: "Optical Character Recognition (OCR) & Document Layout Analysis",
+          tech: "Python, PyTesseract, Document AI Frameworks"
+        },
+        {
+          title: "Computer Vision Application",
+          img: "https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=800&q=80",
+          overview: "Visual analysis concept for performing high-speed object detection and boundary classification across visual feeds.",
+          features: "Multi-class target detection, frame-by-frame analysis, automated visual tagging.",
+          concept: "Convolutional Neural Networks (CNNs) & Object Detection",
+          tech: "Python, OpenCV, PyTorch / TensorFlow"
+        },
+        {
+          title: "AI Content Assistant",
+          img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
+          overview: "Generative AI workspace concept crafted for assisting technical writers and teams with drafting structured documentation.",
+          features: "Automated summarization, stylistic tone adjustment, continuous context preservation.",
+          concept: "Generative Text Synthesis & Transformers",
+          tech: "JavaScript, Generative AI APIs, HTML5/CSS3"
+        }
+      ];
+
+      const modal = document.getElementById('project-modal');
+      const modalClose = document.getElementById('modal-close');
+      const openModalBtns = document.querySelectorAll('.open-modal-btn');
+      const modalActionCloses = document.querySelectorAll('.modal-action-close');
+
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-project'));
+          const data = projectData[idx];
+
+          document.getElementById('modal-title').textContent = data.title;
+          document.getElementById('modal-img').src = data.img;
+          document.getElementById('modal-overview').textContent = data.overview;
+          document.getElementById('modal-features').textContent = data.features;
+          document.getElementById('modal-concept').textContent = data.concept;
+          document.getElementById('modal-tech').textContent = data.tech;
+
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      };
+
+      modalClose.addEventListener('click', closeModal);
+      modalActionCloses.forEach(a => a.addEventListener('click', closeModal));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+
+      /* ==========================================================================
+         AI LAB INTERACTIVE PIPELINE
+         ========================================================================== */
+      const labCards = document.querySelectorAll('.lab-card');
+      const labData = {
+        nn: {
+          input: "Raw Features / Weights",
+          model: "Multi-Layer Perceptron",
+          process: "Activation Forward-Pass",
+          output: "Dense Representation"
+        },
+        ml: {
+          input: "Tabular Feature Vector",
+          model: "Gradient Boosted Trees",
+          process: "Decision Boundary Split",
+          output: "Target Classification"
+        },
+        genai: {
+          input: "Contextual Prompt Embedding",
+          model: "Transformer Neural Net",
+          process: "Autoregressive Sampling",
+          output: "Synthesized Output Text"
+        },
+        cv: {
+          input: "RGB Image Array",
+          model: "Convolutional Layers",
+          process: "Spatial Matrix Filter",
+          output: "Bounding Box / Class Label"
+        },
+        nlp: {
+          input: "Raw Text Sequence",
+          model: "Tokenizer & Embedding",
+          process: "Attention Mechanism",
+          output: "Semantic Sentiment Matrix"
+        }
+      };
+
+      labCards.forEach(card => {
+        card.addEventListener('click', () => {
+          labCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+
+          const key = card.getAttribute('data-concept');
+          const data = labData[key];
+
+          document.getElementById('lab-input-text').textContent = data.input;
+          document.getElementById('lab-model-text').textContent = data.model;
+          document.getElementById('lab-process-text').textContent = data.process;
+          document.getElementById('lab-output-text').textContent = data.output;
+        });
+      });
+
+
+      /* ==========================================================================
+         AI ASSISTANT CHAT INTERFACE PREVIEW
+         ========================================================================== */
+      const chatInput = document.getElementById('chat-input');
+      const chatSendBtn = document.getElementById('chat-send-btn');
+      const chatMessages = document.getElementById('chat-messages');
+
+      const appendMessage = (text, sender) => {
+        const msg = document.createElement('div');
+        msg.className = `chat-msg ${sender}`;
+        msg.textContent = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      };
+
+      const handleChat = () => {
+        const query = chatInput.value.trim();
+        if (!query) return;
+
+        appendMessage(query, 'user');
+        chatInput.value = '';
+
+        setTimeout(() => {
+          let reply = "I am a simulated portfolio preview interface. In a production environment, this component connects directly to Mohsin's backend AI models.";
+          const lower = query.toLowerCase();
+
+          if (lower.includes('machine learning') || lower.includes('ml')) {
+            reply = "Machine learning allows software to learn patterns from data and use those patterns to make predictions or decisions.";
+          } else if (lower.includes('python')) {
+            reply = "Python is the core foundation for data processing, model engineering, and algorithm integration.";
+          } else if (lower.includes('contact') || lower.includes('hire')) {
+            reply = "You can scroll down to the inquiry section below to submit project parameters or send an email directly to Mohsin.";
+          }
+
+          appendMessage(reply, 'ai');
+        }, 600);
+      };
+
+      chatSendBtn.addEventListener('click', handleChat);
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleChat();
+      });
+
+
+      /* ==========================================================================
+         FAQ ACCORDION
+         ========================================================================== */
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          faqItems.forEach(i => i.classList.remove('active'));
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+
+
+      /* ==========================================================================
+         GALLERY LIGHTBOX
+         ========================================================================== */
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lb-img');
+      const lbClose = document.getElementById('lb-close');
+      const lbPrev = document.getElementById('lb-prev');
+      const lbNext = document.getElementById('lb-next');
+
+      let currentGalleryIdx = 0;
+      const gallerySources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+
+      const updateLightbox = (index) => {
+        currentGalleryIdx = index;
+        lbImg.src = gallerySources[currentGalleryIdx];
+      };
+
+      galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const idx = parseInt(item.getAttribute('data-index'));
+          updateLightbox(idx);
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeLb = () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      };
+
+      lbClose.addEventListener('click', closeLb);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLb();
+      });
+
+      lbPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let newIdx = currentGalleryIdx - 1;
+        if (newIdx < 0) newIdx = gallerySources.length - 1;
+        updateLightbox(newIdx);
+      });
+
+      lbNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let newIdx = currentGalleryIdx + 1;
+        if (newIdx >= gallerySources.length) newIdx = 0;
+        updateLightbox(newIdx);
+      });
+
+
+      /* ==========================================================================
+         FORM VALIDATION & INQUIRY GENERATOR
+         ========================================================================== */
+      const inquiryForm = document.getElementById('inquiryForm');
+
+      inquiryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+
+        // Clear errors
+        document.querySelectorAll('.form-error').forEach(err => err.style.display = 'none');
+
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const projectType = document.getElementById('projectType').value;
+        const budget = document.getElementById('budget').value;
+        const details = document.getElementById('details').value.trim();
+
+        if (!name) {
+          document.getElementById('nameError').style.display = 'block';
+          isValid = false;
+        }
+        if (!phone) {
+          document.getElementById('phoneError').style.display = 'block';
+          isValid = false;
+        }
+        if (!email || !email.includes('@')) {
+          document.getElementById('emailError').style.display = 'block';
+          isValid = false;
+        }
+        if (!projectType) {
+          document.getElementById('typeError').style.display = 'block';
+          isValid = false;
+        }
+        if (!budget) {
+          document.getElementById('budgetError').style.display = 'block';
+          isValid = false;
+        }
+        if (!details) {
+          document.getElementById('detailsError').style.display = 'block';
+          isValid = false;
+        }
+
+        if (isValid) {
+          const formOutput = document.getElementById('formOutput');
+          formOutput.style.display = 'block';
+          formOutput.innerHTML = `
+            <strong style="color: var(--cyan);">Project Inquiry Generated:</strong><br>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #fff;">
+              "Hello Mohsin, my name is <strong>${name}</strong>. I am reaching out regarding a <strong>${projectType}</strong> project with a <strong>${budget}</strong> budget tier.<br><br>
+              <strong>Details:</strong> ${details}<br><br>
+              <strong>Contact Email:</strong> ${email} | <strong>Phone:</strong> ${phone}"
+            </p>
+            <p style="margin-top: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
+              Thank you. You can copy this generated message or transmit it via email.
+            </p>
+          `;
+        }
+      });
+
+
+      /* ==========================================================================
+         FOOTER YEAR
+         ========================================================================== */
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    });
+  </script>
+</body>
+</html>
